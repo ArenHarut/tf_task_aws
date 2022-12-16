@@ -46,7 +46,7 @@ resource "aws_instance" "web" {
   }
   
   tags = {
-    Name = "DemoForKirills"
+    Name = "WebserverForKirills"
   }
   depends_on = [
     aws_instance.db
@@ -67,7 +67,7 @@ resource "aws_instance" "db" {
   }
   user_data = "${file("./scripts/init.sh")}"
   tags = {
-    Name = "DemoForKirills"
+    Name = "DBForKirills"
   }
 }
 
