@@ -24,7 +24,7 @@ provider "acme" {
 terraform {
   backend "s3" {
     bucket = "backend-tf-demo"
-    key = "kirills/terraform.tfstate"
+    key    = "kirills/terraform.tfstate"
     region = "us-east-2"
   }
 }

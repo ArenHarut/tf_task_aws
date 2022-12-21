@@ -1,19 +1,19 @@
 resource "aws_instance" "web" {
   ami           = data.aws_ami.webserver.id
   instance_type = var.instance_type
-  key_name = aws_key_pair.webserver-key.key_name
+  key_name      = aws_key_pair.webserver-key.key_name
   network_interface {
     network_interface_id = aws_network_interface.webservice.id
     device_index         = 0
   }
   connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      private_key = file(var.private_key)
-      host        = aws_instance.web.public_ip
-    }
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file(var.private_key)
+    host        = aws_instance.web.public_ip
+  }
   provisioner "file" {
-    source = "./scripts/webserver.sh"
+    source      = "./scripts/webserver.sh"
     destination = "/home/ec2-user/webserver.sh"
   }
   provisioner "remote-exec" {
@@ -27,7 +27,7 @@ resource "aws_instance" "web" {
     ]
   }
   provisioner "file" {
-    source = "scripts/ping.sh"
+    source      = "scripts/ping.sh"
     destination = "/home/ec2-user/ping.sh"
   }
   provisioner "remote-exec" {
@@ -44,7 +44,7 @@ resource "aws_instance" "web" {
   credit_specification {
     cpu_credits = "unlimited"
   }
-  
+
   tags = {
     Name = "WebserverForKirills"
   }
@@ -56,7 +56,7 @@ resource "aws_instance" "web" {
 resource "aws_instance" "db" {
   ami           = data.aws_ami.webserver.id
   instance_type = var.instance_type
-  key_name = aws_key_pair.webserver-key.key_name
+  key_name      = aws_key_pair.webserver-key.key_name
   network_interface {
     network_interface_id = aws_network_interface.db.id
     device_index         = 0
@@ -65,7 +65,7 @@ resource "aws_instance" "db" {
   credit_specification {
     cpu_credits = "unlimited"
   }
-  user_data = "${file("./scripts/init.sh")}"
+  user_data = file("./scripts/init.sh")
   tags = {
     Name = "DBForKirills"
   }

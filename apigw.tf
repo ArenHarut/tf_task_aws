@@ -6,7 +6,7 @@ resource "aws_api_gateway_rest_api" "weather" {
     types = ["REGIONAL"]
   }
 
-  name                     = var.apigw_rest_api_name
+  name = var.apigw_rest_api_name
 }
 
 resource "aws_api_gateway_deployment" "weather" {
@@ -26,17 +26,17 @@ resource "aws_api_gateway_deployment" "weather" {
 }
 
 resource "aws_api_gateway_stage" "weather" {
-  deployment_id         = aws_api_gateway_deployment.weather.id
-  rest_api_id           = aws_api_gateway_rest_api.weather.id
-  stage_name            = var.apigw_rest_api_stage_name
-  xray_tracing_enabled  = var.xray_tracing_enabled
+  deployment_id        = aws_api_gateway_deployment.weather.id
+  rest_api_id          = aws_api_gateway_rest_api.weather.id
+  stage_name           = var.apigw_rest_api_stage_name
+  xray_tracing_enabled = var.xray_tracing_enabled
 }
 
 resource "aws_api_gateway_method" "getmethod" {
-  authorization    = var.method_authorization
-  http_method      = var.http_method
-  resource_id      = aws_api_gateway_rest_api.weather.root_resource_id
-  rest_api_id      = aws_api_gateway_rest_api.weather.id
+  authorization = var.method_authorization
+  http_method   = var.http_method
+  resource_id   = aws_api_gateway_rest_api.weather.root_resource_id
+  rest_api_id   = aws_api_gateway_rest_api.weather.id
 }
 
 resource "aws_api_gateway_method_response" "getresponse" {

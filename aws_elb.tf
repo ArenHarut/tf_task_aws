@@ -1,8 +1,8 @@
 resource "aws_elb" "webservice" {
-  name               = "kirills-demo-terraform-elb"
+  name = "kirills-demo-terraform-elb"
   /* availability_zones = ["us-east-2a"] */
   security_groups = ["${aws_security_group.webserver_sg.id}"]
-  subnets = [ "${aws_subnet.webservice.id}" ]
+  subnets         = ["${aws_subnet.webservice.id}"]
 
   listener {
     instance_port     = 80

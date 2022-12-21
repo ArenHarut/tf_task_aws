@@ -1,16 +1,16 @@
 # Create a VPC
 resource "aws_vpc" "webservice" {
-  cidr_block = var.vpc_cidr_block
-  enable_dns_support   = true
+  cidr_block         = var.vpc_cidr_block
+  enable_dns_support = true
   tags = {
     Name = "DemoForKirills"
   }
 }
 
 resource "aws_subnet" "webservice" {
-  vpc_id            = aws_vpc.webservice.id
-  cidr_block        = var.webservice_subnet_cidr_block
-  availability_zone = var.webservice_subnet_az
+  vpc_id                  = aws_vpc.webservice.id
+  cidr_block              = var.webservice_subnet_cidr_block
+  availability_zone       = var.webservice_subnet_az
   map_public_ip_on_launch = true
 
   tags = {
@@ -19,9 +19,9 @@ resource "aws_subnet" "webservice" {
 }
 
 resource "aws_subnet" "db" {
-  vpc_id            = aws_vpc.webservice.id
-  cidr_block        = var.db_subnet_cidr_block
-  availability_zone = var.db_subnet_az
+  vpc_id                  = aws_vpc.webservice.id
+  cidr_block              = var.db_subnet_cidr_block
+  availability_zone       = var.db_subnet_az
   map_public_ip_on_launch = true
 
   tags = {
@@ -30,8 +30,8 @@ resource "aws_subnet" "db" {
 }
 
 resource "aws_network_interface" "webservice" {
-  subnet_id   = aws_subnet.webservice.id
-  private_ips = ["${var.webservice_nic}"]
+  subnet_id       = aws_subnet.webservice.id
+  private_ips     = ["${var.webservice_nic}"]
   security_groups = [aws_security_group.webserver_sg.id]
 
   tags = {
@@ -40,8 +40,8 @@ resource "aws_network_interface" "webservice" {
 }
 
 resource "aws_network_interface" "db" {
-  subnet_id   = aws_subnet.db.id
-  private_ips = ["${var.db_nic}"]
+  subnet_id       = aws_subnet.db.id
+  private_ips     = ["${var.db_nic}"]
   security_groups = [aws_security_group.db_sg.id]
 
   tags = {
