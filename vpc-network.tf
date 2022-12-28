@@ -53,7 +53,7 @@ resource "aws_security_group" "webserver_sg" {
   name        = var.webservice_sg_name
   description = var.webservice_sg_description
   vpc_id      = aws_vpc.webservice.id
-  ingress {
+  /* ingress {
     description = "Allow SSH traffic"
     from_port   = 22
     to_port     = 22
@@ -73,32 +73,63 @@ resource "aws_security_group" "webserver_sg" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  } */
+  dynamic "ingress" {
+  for_each = local.web_inbound_ports
+  content {
+   from_port = ingress.value
+   to_port = ingress.value
+   protocol = "tcp"
+   cidr_blocks = ["0.0.0.0/0"]
   }
-  egress {
+ }
+  /* egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+} */
+  dynamic "egress" {
+  for_each = local.outbound_ports
+  content {
+   from_port = egress.value
+   to_port = egress.value
+   protocol = "-1"
+   cidr_blocks = ["0.0.0.0/0"]
+  }
+ }
 }
 
 resource "aws_security_group" "db_sg" {
   name        = var.db_sg_name
   description = var.db_sg_description
   vpc_id      = aws_vpc.webservice.id
-  ingress {
+  /* ingress {
     description = "allow private network traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["${var.vpc_cidr_block}"]
+  } */
+  dynamic "ingress" {
+  for_each = local.db_inbound_ports
+  content {
+   from_port = ingress.value
+   to_port = ingress.value
+   protocol = "-1"
+   cidr_blocks = ["${var.vpc_cidr_block}"]
   }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+ }
+  dynamic "egress" {
+  for_each = local.outbound_ports
+  content {
+   from_port = egress.value
+   to_port = egress.value
+   protocol = "-1"
+   cidr_blocks = ["0.0.0.0/0"]
   }
+ }
 }
 
 resource "aws_internet_gateway" "gw" {
