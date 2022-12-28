@@ -75,14 +75,14 @@ resource "aws_security_group" "webserver_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   } */
   dynamic "ingress" {
-  for_each = local.web_inbound_ports
-  content {
-   from_port = ingress.value
-   to_port = ingress.value
-   protocol = "tcp"
-   cidr_blocks = ["0.0.0.0/0"]
+    for_each = local.web_inbound_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
- }
   /* egress {
     from_port   = 0
     to_port     = 0
@@ -91,14 +91,14 @@ resource "aws_security_group" "webserver_sg" {
   }
 } */
   dynamic "egress" {
-  for_each = local.outbound_ports
-  content {
-   from_port = egress.value
-   to_port = egress.value
-   protocol = "-1"
-   cidr_blocks = ["0.0.0.0/0"]
+    for_each = local.outbound_ports
+    content {
+      from_port   = egress.value
+      to_port     = egress.value
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
- }
 }
 
 resource "aws_security_group" "db_sg" {
@@ -113,23 +113,23 @@ resource "aws_security_group" "db_sg" {
     cidr_blocks = ["${var.vpc_cidr_block}"]
   } */
   dynamic "ingress" {
-  for_each = local.db_inbound_ports
-  content {
-   from_port = ingress.value
-   to_port = ingress.value
-   protocol = "-1"
-   cidr_blocks = ["${var.vpc_cidr_block}"]
+    for_each = local.db_inbound_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "-1"
+      cidr_blocks = ["${var.vpc_cidr_block}"]
+    }
   }
- }
   dynamic "egress" {
-  for_each = local.outbound_ports
-  content {
-   from_port = egress.value
-   to_port = egress.value
-   protocol = "-1"
-   cidr_blocks = ["0.0.0.0/0"]
+    for_each = local.outbound_ports
+    content {
+      from_port   = egress.value
+      to_port     = egress.value
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
- }
 }
 
 resource "aws_internet_gateway" "gw" {
