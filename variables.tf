@@ -98,66 +98,6 @@ variable "ec2_keypair_name" {
 
 ###############APIGW-variables##################
 
-variable "apigw_rest_api_description" {
-  type    = string
-  default = "weather"
-}
-
-variable "apigw_rest_api_name" {
-  type    = string
-  default = "weather"
-}
-
-variable "apigw_rest_api_stage_name" {
-  type    = string
-  default = "weather"
-}
-
-variable "xray_tracing_enabled" {
-  type    = bool
-  default = false
-}
-
-variable "method_authorization" {
-  type    = string
-  default = "NONE"
-}
-
-variable "http_method" {
-  type    = string
-  default = "GET"
-}
-
-variable "method_response_status_code" {
-  type    = string
-  default = "200"
-}
-
-variable "integration_connection_type" {
-  type    = string
-  default = "INTERNET"
-}
-
-variable "integration_connection_handling" {
-  type    = string
-  default = "CONVERT_TO_TEXT"
-}
-
-variable "integration_http_method" {
-  type    = string
-  default = "POST"
-}
-
-variable "integration_passthrough_behavior" {
-  type    = string
-  default = "WHEN_NO_MATCH"
-}
-
-variable "integration_type" {
-  type    = string
-  default = "AWS_PROXY"
-}
-
 ###############ELB-variables##################
 
 variable "elb_name" {
@@ -205,33 +145,3 @@ variable "acme_cert_challange_provider" {
 }
 
 ###############Lambda-variables##################
-
-variable "lambda_iam_role_name" {
-  type    = string
-  default = "weather_Lambda_Function_Role"
-}
-
-variable "lambda_iam_policy_name" {
-  type    = string
-  default = "aws_iam_policy_for_terraform_aws_weather_lambda_role"
-}
-
-variable "lambda_zip_filename" {
-  type    = string
-  default = "weather.zip"
-}
-
-variable "lambda_fuction_name" {
-  type    = string
-  default = "weather"
-}
-
-variable "lambda_fuction_handler" {
-  type    = string
-  default = "index.handler"
-}
-
-variable "lambda_fuction_runtime" {
-  type    = string
-  default = "nodejs14.x"
-}
