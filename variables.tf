@@ -81,21 +81,6 @@ variable "private_key" {
   default = ("C:\\Users\\aren\\.ssh\\id_rsa")
 }
 
-/* variable "connection_type" {
-  type= string
-  default = "ssh"
-}
-
-variable "connection_user" {
-  type= string
-  default = "ec2-user"
-}
-
-variable "ec2_keypair_name" {
-  type= string
-  default = "webserver-key"
-} */
-
 ###############APIGW-variables##################
 
 ###############ELB-variables##################
